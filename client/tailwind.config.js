@@ -4,18 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#E53935",
-        ink: "#1F2937",
-        mist: "#F6F7F9"
+        primary: "#f472b6",
+        primarySoft: "#fdf2f8",
+        primaryStrong: "#db2777",
+        ink: "#4b3d49",
+        mist: "#fffafc",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(31, 41, 55, 0.08)"
-      }
-    }
+        soft: "0 20px 45px rgba(244, 114, 182, 0.15)",
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
-

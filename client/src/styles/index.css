@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 :root {
-  color: #1f2937;
-  background: #f6f7f9;
+  color: #4b3d49;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(253, 232, 245, 0.95),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #fffafc 0%, #fdf2f8 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,6 +21,44 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: transparent;
+  color: inherit;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.7;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+body::before {
+  inset: -8% auto auto -8%;
+  width: 18rem;
+  height: 18rem;
+  background: rgba(244, 114, 182, 0.2);
+}
+
+body::after {
+  inset: auto -8% -10% auto;
+  width: 20rem;
+  height: 20rem;
+  background: rgba(251, 207, 232, 0.3);
+  animation-direction: alternate-reverse;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1.25rem, -1.5rem, 0) scale(1.08);
+  }
 }
 
 button,
@@ -33,21 +77,21 @@ textarea {
 }
 
 .panel {
-  @apply rounded-lg border border-gray-200 bg-white shadow-soft;
+  @apply rounded-2xl border border-pink-100 bg-white/85 shadow-soft backdrop-blur-sm;
 }
 
 .icon-button {
-  @apply inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 transition hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-pink-100 bg-white/90 text-gray-700 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none;
 }
 
 .solid-button {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-primaryStrong focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none;
 }
 
 .ghost-button {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-pink-200 bg-white/80 px-4 py-2.5 text-sm font-semibold text-gray-700 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-primary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 motion-reduce:transition-none;
 }
 
 .field {
-  @apply w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  @apply w-full rounded-xl border border-pink-200 bg-white/80 px-3 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
 }
