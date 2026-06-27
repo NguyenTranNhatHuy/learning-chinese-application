@@ -19,11 +19,22 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Learning Chinese API",
+    health: "/api/health",
+  });
+});
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", app: "learning-chinese" });
 });
@@ -57,4 +68,3 @@ connectDB()
     console.error("Cannot start server:", error.message);
     process.exit(1);
   });
-
