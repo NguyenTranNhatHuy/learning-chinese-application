@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Check, Eye, EyeOff, Heart, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { FilterBar } from "../components/FilterBar.jsx";
+import { LazyImage } from "../components/LazyImage.jsx";
 import { speakChinese } from "../utils/speech.js";
 
 export function LearnPage({ topics, words, learning }) {
@@ -91,7 +92,7 @@ export function LearnPage({ topics, words, learning }) {
               </button>
 
               <div className="border-t border-gray-200 bg-gray-50 p-5 md:border-l md:border-t-0">
-                <img className="h-44 w-full rounded-lg object-cover" src={current.image} alt={current.meaning} />
+                <LazyImage className="h-44 w-full rounded-lg object-cover" src={current.image} alt={current.meaning} />
                 <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
                   <Info label="Bộ thủ" value={current.radical || "-"} />
                   <Info label="Số nét" value={current.strokes || "-"} />

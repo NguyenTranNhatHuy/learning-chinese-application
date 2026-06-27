@@ -3,34 +3,38 @@ export const topics = [
     id: "family",
     title: "Gia đình",
     description: "Người thân, nhà cửa và sinh hoạt hằng ngày.",
-    image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80",
     accent: "#E53935",
-    vocabularyCount: 3
+    vocabularyCount: 3,
   },
   {
     id: "school",
     title: "Trường học",
     description: "Lớp học, môn học và câu nói quen thuộc ở trường.",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80",
     accent: "#2563EB",
-    vocabularyCount: 2
+    vocabularyCount: 2,
   },
   {
     id: "travel",
     title: "Du lịch",
     description: "Đi lại, hỏi đường, khách sạn và trải nghiệm thành phố.",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
     accent: "#059669",
-    vocabularyCount: 2
+    vocabularyCount: 2,
   },
   {
     id: "work",
     title: "Công việc",
     description: "Văn phòng, nghề nghiệp, lịch họp và trao đổi công việc.",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
     accent: "#F59E0B",
-    vocabularyCount: 1
-  }
+    vocabularyCount: 1,
+  },
 ];
 
 export const vocabularies = [
@@ -50,7 +54,8 @@ export const vocabularies = [
     synonyms: ["您好"],
     antonyms: [],
     relatedWords: ["再见", "谢谢"],
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "jia",
@@ -68,7 +73,8 @@ export const vocabularies = [
     synonyms: [],
     antonyms: [],
     relatedWords: ["爸爸", "妈妈", "孩子"],
-    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "xi-huan",
@@ -86,7 +92,8 @@ export const vocabularies = [
     synonyms: ["爱"],
     antonyms: ["讨厌"],
     relatedWords: ["爱好"],
-    image: "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "xue-xiao",
@@ -104,7 +111,8 @@ export const vocabularies = [
     synonyms: [],
     antonyms: [],
     relatedWords: ["老师", "学生", "教室"],
-    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "xue-xi",
@@ -122,7 +130,8 @@ export const vocabularies = [
     synonyms: ["念书"],
     antonyms: [],
     relatedWords: ["中文", "考试"],
-    image: "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "tian-qi",
@@ -140,7 +149,8 @@ export const vocabularies = [
     synonyms: [],
     antonyms: [],
     relatedWords: ["今天", "下雨", "热"],
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "jiu-dian",
@@ -158,7 +168,8 @@ export const vocabularies = [
     synonyms: ["宾馆"],
     antonyms: [],
     relatedWords: ["房间", "护照"],
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+    image:
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "gong-zuo",
@@ -176,14 +187,21 @@ export const vocabularies = [
     synonyms: [],
     antonyms: ["休息"],
     relatedWords: ["公司", "会议"],
-    image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"
-  }
+    image:
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80",
+  },
 ];
 
 export const quizzes = vocabularies.flatMap((word, index) => {
   const others = vocabularies.filter((item) => item.id !== word.id);
-  const meaningOptions = [word.meaning, ...others.slice(index % 3, index % 3 + 3).map((item) => item.meaning)];
-  const pinyinOptions = [word.pinyin, ...others.slice(index % 3, index % 3 + 3).map((item) => item.pinyin)];
+  const meaningOptions = [
+    word.meaning,
+    ...others.slice(index % 3, (index % 3) + 3).map((item) => item.meaning),
+  ];
+  const pinyinOptions = [
+    word.pinyin,
+    ...others.slice(index % 3, (index % 3) + 3).map((item) => item.pinyin),
+  ];
 
   return [
     {
@@ -193,7 +211,7 @@ export const quizzes = vocabularies.flatMap((word, index) => {
       question: word.chinese,
       options: normalizeOptions(meaningOptions),
       answer: word.meaning,
-      explanation: `${word.chinese} đọc là ${word.pinyin}.`
+      explanation: `${word.chinese} đọc là ${word.pinyin}.`,
     },
     {
       id: `${word.id}-pinyin`,
@@ -202,8 +220,8 @@ export const quizzes = vocabularies.flatMap((word, index) => {
       question: word.chinese,
       options: normalizeOptions(pinyinOptions),
       answer: word.pinyin,
-      explanation: `Pinyin đúng là ${word.pinyin}.`
-    }
+      explanation: `Pinyin đúng là ${word.pinyin}.`,
+    },
   ];
 });
 
@@ -219,7 +237,7 @@ export const studyHistory = [
   { day: "T5", words: 10, score: 88 },
   { day: "T6", words: 7, score: 80 },
   { day: "T7", words: 11, score: 92 },
-  { day: "CN", words: 9, score: 85 }
+  { day: "CN", words: 9, score: 85 },
 ];
 
 export const demoUsers = [
@@ -230,7 +248,7 @@ export const demoUsers = [
     role: "user",
     streak: 5,
     avatar: "",
-    joinedAt: "2026-06-01"
+    joinedAt: "2026-06-01",
   },
   {
     id: "demo-admin",
@@ -239,7 +257,6 @@ export const demoUsers = [
     role: "admin",
     streak: 12,
     avatar: "",
-    joinedAt: "2026-05-20"
-  }
+    joinedAt: "2026-05-20",
+  },
 ];
-

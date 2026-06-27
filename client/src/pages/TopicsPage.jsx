@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { LazyImage } from "../components/LazyImage.jsx";
 import { TopicTile } from "../components/TopicTile.jsx";
 import { WordTile } from "../components/WordTile.jsx";
 
@@ -56,7 +57,7 @@ export function TopicDetailPage({ topics, words, learning }) {
             <h2 className="mt-5 text-3xl font-black text-gray-950">{topic.title}</h2>
             <p className="mt-2 max-w-2xl text-gray-600">{topic.description}</p>
           </div>
-          <img className="h-64 w-full object-cover md:h-full" src={topic.image} alt={topic.title} />
+          <LazyImage className="h-64 w-full object-cover md:h-full" src={topic.image} alt={topic.title} />
         </div>
       </section>
 

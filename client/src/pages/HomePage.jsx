@@ -1,5 +1,6 @@
 import { BarChart3, BookOpen, Flame, Heart, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LazyImage } from "../components/LazyImage.jsx";
 import { StatCard } from "../components/StatCard.jsx";
 import { TopicTile } from "../components/TopicTile.jsx";
 import { WordTile } from "../components/WordTile.jsx";
@@ -41,7 +42,7 @@ export function HomePage({ topics, words, learning, user }) {
                 </Link>
               </div>
             </div>
-            <img className="h-64 w-full object-cover md:h-full" src={todayWord?.image} alt={todayWord?.meaning} />
+            <LazyImage className="h-64 w-full object-cover md:h-full" src={todayWord?.image} alt={todayWord?.meaning} />
           </div>
         </div>
 

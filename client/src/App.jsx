@@ -3,7 +3,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { http } from "./api/http.js";
 import { Layout } from "./components/Layout.jsx";
-import { quizzes as mockQuizzes, topics as mockTopics, vocabularies as mockWords } from "./data/mockData.js";
+import {
+  quizzes as mockQuizzes,
+  topics as mockTopics,
+  vocabularies as mockWords,
+} from "./data/mockData.js";
 import { useLearningState } from "./hooks/useLearningState.js";
 import { AdminPage } from "./pages/AdminPage.jsx";
 import { AuthPage } from "./pages/AuthPage.jsx";
@@ -19,21 +23,21 @@ import { TopicDetailPage, TopicsPage } from "./pages/TopicsPage.jsx";
 import { useAuth } from "./state/AuthContext.jsx";
 
 export default function App() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const topicsQuery = useQuery({
     queryKey: ["topics"],
     queryFn: async () => (await http.get("/topics")).data,
-    retry: false
+    retry: false,
   });
   const wordsQuery = useQuery({
     queryKey: ["vocabularies"],
     queryFn: async () => (await http.get("/vocabularies")).data,
-    retry: false
+    retry: false,
   });
   const quizzesQuery = useQuery({
     queryKey: ["quizzes"],
     queryFn: async () => (await http.get("/quiz")).data,
-    retry: false
+    retry: false,
   });
 
   const topics = useMemo(() => {
@@ -45,7 +49,7 @@ export default function App() {
       description: topic.description,
       image: topic.image,
       accent: topic.accent || "#E53935",
-      vocabularyCount: topic.vocabularyCount || 0
+      vocabularyCount: topic.vocabularyCount || 0,
     }));
   }, [topicsQuery.data]);
 
@@ -69,7 +73,7 @@ export default function App() {
       hskLevel: word.hskLevel,
       synonyms: word.synonyms || [],
       antonyms: word.antonyms || [],
-      relatedWords: word.relatedWords || []
+      relatedWords: word.relatedWords || [],
     }));
   }, [wordsQuery.data]);
 
@@ -83,27 +87,104 @@ export default function App() {
       question: quiz.question,
       options: quiz.options,
       answer: quiz.answer,
-      explanation: quiz.explanation
+      explanation: quiz.explanation,
     }));
   }, [quizzesQuery.data]);
 
   const learning = useLearningState(words);
 
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-mist text-sm font-semibold text-gray-600">
+        Đang kiểm tra đăng nhập...
+      </div>
+    );
+  }
+
   return (
     <Layout metrics={learning.metrics}>
       <Routes>
-        <Route path="/" element={<HomePage topics={topics} words={words} learning={learning} user={user} />} />
+        <Route
+          path="/"
+          element={
+            <HomePage
+              topics={topics}
+              words={words}
+              learning={learning}
+              user={user}
+            />
+          }
+        />
         <Route path="/topics" element={<TopicsPage topics={topics} />} />
-        <Route path="/topics/:topicId" element={<TopicDetailPage topics={topics} words={words} learning={learning} />} />
-        <Route path="/learn" element={<LearnPage topics={topics} words={words} learning={learning} />} />
-        <Route path="/quiz" element={<QuizPage quizzes={quizzes} words={words} learning={learning} />} />
-        <Route path="/review" element={<ReviewPage topics={topics} words={words} learning={learning} />} />
-        <Route path="/dashboard" element={<DashboardPage topics={topics} words={words} learning={learning} user={user} />} />
-        <Route path="/favorites" element={<FavoritesPage topics={topics} words={words} learning={learning} />} />
-        <Route path="/profile" element={<ProfilePage topics={topics} learning={learning} />} />
-        <Route path="/search" element={<SearchPage topics={topics} words={words} learning={learning} />} />
-        <Route path="/admin" element={<AdminPage topics={topics} words={words} quizzes={quizzes} />} />
-        <Route path="/login" element={<AuthPage />} />
+        <Route
+          path="/topics/:topicId"
+          element={
+            <TopicDetailPage
+              topics={topics}
+              words={words}
+              learning={learning}
+            />
+          }
+        />
+        <Route
+          path="/learn"
+          element={
+            <LearnPage topics={topics} words={words} learning={learning} />
+          }
+        />
+        <Route
+          path="/quiz"
+          element={
+            <QuizPage quizzes={quizzes} words={words} learning={learning} />
+          }
+        />
+        <Route
+          path="/review"
+          element={
+            <ReviewPage topics={topics} words={words} learning={learning} />
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <DashboardPage
+              topics={topics}
+              words={words}
+              learning={learning}
+              user={user}
+            />
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <FavoritesPage topics={topics} words={words} learning={learning} />
+          }
+        />
+        <Route
+          path="/profile"
+          element={<ProfilePage topics={topics} learning={learning} />}
+        />
+        <Route
+          path="/search"
+          element={
+            <SearchPage topics={topics} words={words} learning={learning} />
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            user?.role === "admin" ? (
+              <AdminPage topics={topics} words={words} quizzes={quizzes} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/" replace /> : <AuthPage />}
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Layout>
@@ -115,4 +196,3 @@ function normalizeTopicId(value) {
   if (typeof value === "string") return value;
   return value._id || value.id || "";
 }
-

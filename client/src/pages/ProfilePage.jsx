@@ -1,8 +1,10 @@
-import { CalendarDays, Mail, UserRound } from "lucide-react";
+import { CalendarDays, LogOut, Mail, UserRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../state/AuthContext.jsx";
 
 export function ProfilePage({ topics, learning }) {
-  const { user, switchRole } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) {
     return (
@@ -12,11 +14,16 @@ export function ProfilePage({ topics, learning }) {
     );
   }
 
+  async function handleLogout() {
+    await logout();
+    navigate("/login");
+  }
+
   return (
     <div className="grid gap-5 xl:grid-cols-[360px_1fr]">
       <section className="panel p-5">
         <div className="flex items-center gap-4">
-          <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-red-50 text-primary">
+          <div className="flex h-20 w-20 items-center justify-center rounded-lg bg-pink-50 text-primary">
             <UserRound size={34} />
           </div>
           <div>
@@ -31,22 +38,25 @@ export function ProfilePage({ topics, learning }) {
           </p>
           <p className="flex items-center gap-2 text-gray-600">
             <CalendarDays size={17} />
-            {user.joinedAt || user.createdAt || "Demo account"}
+            {user.createdAt || "Tài khoản mới"}
           </p>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-2">
-          <button className="ghost-button" type="button" onClick={() => switchRole("user")}>
-            User
-          </button>
-          <button className="ghost-button" type="button" onClick={() => switchRole("admin")}>
-            Admin
-          </button>
-        </div>
+        <button
+          className="ghost-button mt-6 w-full"
+          type="button"
+          onClick={handleLogout}
+        >
+          <LogOut size={17} />
+          Đăng xuất
+        </button>
       </section>
 
       <section className="panel overflow-hidden">
         <div className="grid divide-y divide-gray-200 md:grid-cols-4 md:divide-x md:divide-y-0">
-          <ProfileStat label="Từ đã học" value={learning.metrics.learnedCount} />
+          <ProfileStat
+            label="Từ đã học"
+            value={learning.metrics.learnedCount}
+          />
           <ProfileStat label="Chủ đề" value={topics.length} />
           <ProfileStat label="Quiz" value={12} />
           <ProfileStat label="Streak" value={user.streak || 0} />
@@ -54,9 +64,14 @@ export function ProfilePage({ topics, learning }) {
         <div className="border-t border-gray-200 p-5">
           <h3 className="font-bold text-gray-950">Hồ sơ học tập</h3>
           <div className="mt-4 h-2 rounded-full bg-gray-200">
-            <div className="h-2 rounded-full bg-primary" style={{ width: `${learning.metrics.progress}%` }} />
+            <div
+              className="h-2 rounded-full bg-primary"
+              style={{ width: `${learning.metrics.progress}%` }}
+            />
           </div>
-          <p className="mt-3 text-sm text-gray-500">Tiến độ hiện tại: {learning.metrics.progress}%.</p>
+          <p className="mt-3 text-sm text-gray-500">
+            Tiến độ hiện tại: {learning.metrics.progress}%.
+          </p>
         </div>
       </section>
     </div>
@@ -71,4 +86,3 @@ function ProfileStat({ label, value }) {
     </div>
   );
 }
-

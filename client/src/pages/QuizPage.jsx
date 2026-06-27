@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { CheckCircle2, Headphones, ListChecks, XCircle } from "lucide-react";
+import { LazyImage } from "../components/LazyImage.jsx";
 import { speakChinese } from "../utils/speech.js";
 
 const quizTypes = [
@@ -125,7 +126,7 @@ export function QuizPage({ quizzes, words, learning }) {
             </div>
 
             <aside className="border-t border-gray-200 bg-gray-50 p-5 xl:border-l xl:border-t-0">
-              <img className="h-44 w-full rounded-lg object-cover" src={word?.image} alt={word?.meaning} />
+              <LazyImage className="h-44 w-full rounded-lg object-cover" src={word?.image} alt={word?.meaning} />
               <p className="hanzi mt-4 text-3xl font-bold text-gray-950">{word?.chinese}</p>
               <p className="font-semibold text-primary">{word?.pinyin}</p>
               <p className="mt-2 text-sm text-gray-600">{quiz.explanation}</p>

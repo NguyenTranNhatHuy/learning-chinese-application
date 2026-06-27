@@ -1,5 +1,6 @@
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LazyImage } from "./LazyImage.jsx";
 
 export function TopicTile({ topic }) {
   return (
@@ -8,7 +9,7 @@ export function TopicTile({ topic }) {
       to={`/topics/${topic.id}`}
     >
       <div className="aspect-[16/9] overflow-hidden bg-pink-50">
-        <img
+        <LazyImage
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
           src={topic.image}
           alt={topic.title}
