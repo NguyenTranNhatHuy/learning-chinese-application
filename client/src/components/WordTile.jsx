@@ -1,4 +1,5 @@
 import { Check, Heart, Volume2 } from "lucide-react";
+import { LazyImage } from "./LazyImage.jsx";
 import { speakChinese } from "../utils/speech.js";
 
 export function WordTile({
@@ -13,7 +14,7 @@ export function WordTile({
     <article className="panel overflow-hidden transition duration-200 ease-out hover:-translate-y-0.5">
       <div className="grid gap-0 sm:grid-cols-[150px_1fr]">
         <div className="overflow-hidden bg-pink-50">
-          <img
+          <LazyImage
             className="h-40 w-full object-cover transition duration-300 hover:scale-[1.02] sm:h-full"
             src={word.image}
             alt={word.meaning}

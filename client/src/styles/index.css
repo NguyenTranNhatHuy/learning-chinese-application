@@ -68,6 +68,19 @@ textarea {
   font: inherit;
 }
 
+:root {
+  --toastify-color-progress-light: #f472b6;
+}
+
+.Toastify__toast {
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(244, 114, 182, 0.16);
+}
+
+.Toastify__toast-theme--light {
+  color: #4b3d49;
+}
+
 .hanzi {
   font-family: "Noto Serif SC", "SimSun", "Songti SC", serif;
 }
