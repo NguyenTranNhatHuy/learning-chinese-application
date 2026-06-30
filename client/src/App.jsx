@@ -21,6 +21,7 @@ import { ReviewPage } from "./pages/ReviewPage.jsx";
 import { SearchPage } from "./pages/SearchPage.jsx";
 import { TopicDetailPage, TopicsPage } from "./pages/TopicsPage.jsx";
 import { useAuth } from "./state/AuthContext.jsx";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 export default function App() {
   const { user, isLoading } = useAuth();
@@ -102,97 +103,104 @@ export default function App() {
   }
 
   return (
-    <Layout metrics={learning.metrics}>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              topics={topics}
-              words={words}
-              learning={learning}
-              user={user}
-            />
-          }
-        />
-        <Route path="/topics" element={<TopicsPage topics={topics} />} />
-        <Route
-          path="/topics/:topicId"
-          element={
-            <TopicDetailPage
-              topics={topics}
-              words={words}
-              learning={learning}
-            />
-          }
-        />
-        <Route
-          path="/learn"
-          element={
-            <LearnPage topics={topics} words={words} learning={learning} />
-          }
-        />
-        <Route
-          path="/quiz"
-          element={
-            <QuizPage
-              quizzes={quizzes}
-              words={words}
-              topics={topics}
-              learning={learning}
-            />
-          }
-        />
-        <Route
-          path="/review"
-          element={
-            <ReviewPage topics={topics} words={words} learning={learning} />
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <DashboardPage
-              topics={topics}
-              words={words}
-              learning={learning}
-              user={user}
-            />
-          }
-        />
-        <Route
-          path="/favorites"
-          element={
-            <FavoritesPage topics={topics} words={words} learning={learning} />
-          }
-        />
-        <Route
-          path="/profile"
-          element={<ProfilePage topics={topics} learning={learning} />}
-        />
-        <Route
-          path="/search"
-          element={
-            <SearchPage topics={topics} words={words} learning={learning} />
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            user?.role === "admin" ? (
-              <AdminPage topics={topics} words={words} quizzes={quizzes} />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/" replace /> : <AuthPage />}
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Layout>
+    <>
+      <Layout metrics={learning.metrics}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                topics={topics}
+                words={words}
+                learning={learning}
+                user={user}
+              />
+            }
+          />
+          <Route path="/topics" element={<TopicsPage topics={topics} />} />
+          <Route
+            path="/topics/:topicId"
+            element={
+              <TopicDetailPage
+                topics={topics}
+                words={words}
+                learning={learning}
+              />
+            }
+          />
+          <Route
+            path="/learn"
+            element={
+              <LearnPage topics={topics} words={words} learning={learning} />
+            }
+          />
+          <Route
+            path="/quiz"
+            element={
+              <QuizPage
+                quizzes={quizzes}
+                words={words}
+                topics={topics}
+                learning={learning}
+              />
+            }
+          />
+          <Route
+            path="/review"
+            element={
+              <ReviewPage topics={topics} words={words} learning={learning} />
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <DashboardPage
+                topics={topics}
+                words={words}
+                learning={learning}
+                user={user}
+              />
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <FavoritesPage
+                topics={topics}
+                words={words}
+                learning={learning}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={<ProfilePage topics={topics} learning={learning} />}
+          />
+          <Route
+            path="/search"
+            element={
+              <SearchPage topics={topics} words={words} learning={learning} />
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              user?.role === "admin" ? (
+                <AdminPage topics={topics} words={words} quizzes={quizzes} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" replace /> : <AuthPage />}
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Layout>
+      <SpeedInsights />
+    </>
   );
 }
 
