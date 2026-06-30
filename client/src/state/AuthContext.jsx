@@ -79,6 +79,24 @@ export function AuthProvider({ children }) {
     }
   }
 
+  async function loginWithGoogle(idToken) {
+    setAuthError("");
+
+    try {
+      const { data } = await http.post("/auth/google", { idToken });
+      persistAuth(data);
+      setUser(data.user);
+      toast.success("Đăng nhập thành công");
+      return data.user;
+    } catch (error) {
+      const message =
+        error.response?.data?.message || "Không đăng nhập được bằng Google.";
+      setAuthError(message);
+      toast.error(message);
+      throw error;
+    }
+  }
+
   async function logout() {
     try {
       await http.post("/auth/logout");
@@ -98,6 +116,7 @@ export function AuthProvider({ children }) {
       isLoading,
       login,
       register,
+      loginWithGoogle,
       logout,
       isAdmin: user?.role === "admin",
     }),
