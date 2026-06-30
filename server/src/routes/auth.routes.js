@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import express from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
@@ -7,13 +8,48 @@ import { authPayload, signAccessToken } from "../utils/tokens.js";
 
 export const authRouter = express.Router();
 
+async function verifyGoogleIdToken(idToken) {
+  if (!idToken) {
+    throw new Error("Thiếu idToken Google.");
+  }
+
+  const googleClientId =
+    process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!googleClientId) {
+    throw new Error("Chưa cấu hình GOOGLE_CLIENT_ID trên máy chủ.");
+  }
+
+  const response = await fetch(
+    `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Google token không hợp lệ.");
+  }
+
+  const payload = await response.json();
+
+  if (payload.aud !== googleClientId) {
+    throw new Error("Google token không hợp lệ.");
+  }
+
+  if (payload.email_verified !== "true" && payload.email_verified !== true) {
+    throw new Error("Email Google chưa được xác thực.");
+  }
+
+  return payload;
+}
+
 authRouter.post(
   "/register",
   asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "Vui lòng nhập tên, email và mật khẩu." });
+      return res
+        .status(400)
+        .json({ message: "Vui lòng nhập tên, email và mật khẩu." });
     }
 
     const exists = await User.findOne({ email });
@@ -23,7 +59,7 @@ authRouter.post(
 
     const user = await User.create({ name, email, password });
     res.status(201).json(authPayload(user));
-  })
+  }),
 );
 
 authRouter.post(
@@ -33,7 +69,9 @@ authRouter.post(
     const user = await User.findOne({ email }).select("+password");
 
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ message: "Email hoặc mật khẩu không đúng." });
+      return res
+        .status(401)
+        .json({ message: "Email hoặc mật khẩu không đúng." });
     }
 
     if (user.isLocked) {
@@ -41,7 +79,37 @@ authRouter.post(
     }
 
     res.json(authPayload(user));
-  })
+  }),
+);
+
+authRouter.post(
+  "/google",
+  asyncHandler(async (req, res) => {
+    const { idToken } = req.body;
+    const payload = await verifyGoogleIdToken(idToken);
+
+    const email = payload.email?.toLowerCase();
+    if (!email) {
+      return res.status(400).json({ message: "Google token không có email." });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name: payload.name || "Người dùng Google",
+        email,
+        password: crypto.randomBytes(24).toString("hex"),
+        avatar: payload.picture || "",
+      });
+    }
+
+    if (user.isLocked) {
+      return res.status(403).json({ message: "Tài khoản đã bị khóa." });
+    }
+
+    res.json(authPayload(user));
+  }),
 );
 
 authRouter.post("/logout", (_req, res) => {
@@ -65,7 +133,7 @@ authRouter.post(
     }
 
     res.json({ accessToken: signAccessToken(user) });
-  })
+  }),
 );
 
 authRouter.get("/profile", protect, (req, res) => {
@@ -84,7 +152,7 @@ authRouter.put(
 
     await req.user.save();
     res.json({ user: req.user.toSafeJSON() });
-  })
+  }),
 );
 
 authRouter.post(
@@ -102,10 +170,12 @@ authRouter.post(
     await user.save();
 
     res.json({ message: "Đổi mật khẩu thành công." });
-  })
+  }),
 );
 
 authRouter.post("/forgot-password", (_req, res) => {
-  res.json({ message: "Đã ghi nhận yêu cầu đặt lại mật khẩu. Hãy cấu hình email provider để gửi link." });
+  res.json({
+    message:
+      "Đã ghi nhận yêu cầu đặt lại mật khẩu. Hãy cấu hình email provider để gửi link.",
+  });
 });
-

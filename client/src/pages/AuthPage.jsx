@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { LogIn, UserPlus } from "lucide-react";
+import { Globe, LogIn, UserPlus } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../state/AuthContext.jsx";
 
@@ -7,7 +8,7 @@ export function AuthPage() {
   const [mode, setMode] = useState("login");
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { login, register, authError } = useAuth();
+  const { login, register, authError, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   async function submit(event) {
@@ -88,6 +89,35 @@ export function AuthPage() {
             {mode === "login" ? <LogIn size={17} /> : <UserPlus size={17} />}
             {mode === "login" ? "Đăng nhập" : "Tạo tài khoản"}
           </button>
+          {import.meta.env.VITE_GOOGLE_CLIENT_ID ? (
+            <div className="mt-3">
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  if (!credentialResponse?.credential) return;
+                  setIsSubmitting(true);
+                  try {
+                    await loginWithGoogle(credentialResponse.credential);
+                    navigate("/");
+                  } catch {
+                    // handled in auth context
+                  } finally {
+                    setIsSubmitting(false);
+                  }
+                }}
+                onError={() => {
+                  setAuthError("Đăng nhập Google không thành công.");
+                }}
+              />
+            </div>
+          ) : (
+            <button
+              className="outline-button mt-3 w-full"
+              type="button"
+              disabled
+            >
+              <Globe size={17} /> Đăng nhập với Google (chưa cấu hình)
+            </button>
+          )}
         </form>
       </section>
     </div>
