@@ -13,6 +13,7 @@ import { quizRouter } from "./routes/quiz.routes.js";
 import { topicRouter } from "./routes/topic.routes.js";
 import { uploadRouter } from "./routes/upload.routes.js";
 import { vocabularyRouter } from "./routes/vocabulary.routes.js";
+import { aiRouter } from "./routes/ai.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,6 +48,7 @@ app.use("/api/favorites", favoriteRouter);
 app.use("/api/progress", progressRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/uploads", uploadRouter);
+app.use("/api/ai", aiRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: `Không tìm thấy route ${req.originalUrl}` });

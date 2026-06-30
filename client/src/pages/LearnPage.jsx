@@ -1,5 +1,14 @@
 import { useMemo, useState } from "react";
-import { Check, Eye, EyeOff, Heart, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react";
+import {
+  Check,
+  Eye,
+  EyeOff,
+  Heart,
+  Shuffle,
+  SkipBack,
+  SkipForward,
+  Volume2,
+} from "lucide-react";
 import { FilterBar } from "../components/FilterBar.jsx";
 import { LazyImage } from "../components/LazyImage.jsx";
 import { speakChinese } from "../utils/speech.js";
@@ -18,7 +27,9 @@ export function LearnPage({ topics, words, learning }) {
     return words.filter((word) => {
       const matchesSearch =
         !keyword ||
-        [word.chinese, word.pinyin, word.meaning, word.example].some((value) => value?.toLowerCase().includes(keyword));
+        [word.chinese, word.pinyin, word.meaning, word.example].some((value) =>
+          value?.toLowerCase().includes(keyword),
+        );
       const matchesHsk = !hsk || Number(word.hskLevel) === Number(hsk);
       const matchesTopic = !topicId || word.topicId === topicId;
       return matchesSearch && matchesHsk && matchesTopic;
@@ -63,7 +74,9 @@ export function LearnPage({ topics, words, learning }) {
       />
 
       {!current ? (
-        <div className="panel p-8 text-center text-gray-600">Không có từ phù hợp.</div>
+        <div className="panel p-8 text-center text-gray-600">
+          Không có từ phù hợp.
+        </div>
       ) : (
         <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <div className="panel overflow-hidden">
@@ -76,23 +89,47 @@ export function LearnPage({ topics, words, learning }) {
               >
                 {!isFlipped ? (
                   <>
-                    <span className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-bold text-primary">HSK {current.hskLevel}</span>
-                    <span className="hanzi mt-8 block text-7xl font-black text-gray-950 md:text-8xl">{current.chinese}</span>
-                    {showPinyin && <span className="mt-4 text-xl font-bold text-primary">{current.pinyin}</span>}
-                    {showMeaning && <span className="mt-2 text-lg text-gray-600">{current.meaning}</span>}
+                    <span className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-bold text-primary">
+                      HSK {current.hskLevel}
+                    </span>
+                    <span className="hanzi mt-8 block text-7xl font-black text-gray-950 md:text-8xl">
+                      {current.chinese}
+                    </span>
+                    {showPinyin && (
+                      <span className="mt-4 text-xl font-bold text-primary">
+                        {current.pinyin}
+                      </span>
+                    )}
+                    {showMeaning && (
+                      <span className="mt-2 text-lg text-gray-600">
+                        {current.meaning}
+                      </span>
+                    )}
                   </>
                 ) : (
                   <>
-                    <span className="text-sm font-bold text-primary">{current.type}</span>
-                    <span className="mt-5 max-w-lg text-2xl font-bold text-gray-950">{current.example}</span>
-                    <span className="mt-3 text-base font-semibold text-gray-500">{current.examplePinyin}</span>
-                    <span className="mt-2 max-w-lg text-gray-600">{current.exampleMeaning}</span>
+                    <span className="text-sm font-bold text-primary">
+                      {current.type}
+                    </span>
+                    <span className="mt-5 max-w-lg text-2xl font-bold text-gray-950">
+                      {current.example}
+                    </span>
+                    <span className="mt-3 text-base font-semibold text-gray-500">
+                      {current.examplePinyin}
+                    </span>
+                    <span className="mt-2 max-w-lg text-gray-600">
+                      {current.exampleMeaning}
+                    </span>
                   </>
                 )}
               </button>
 
               <div className="border-t border-gray-200 bg-gray-50 p-5 md:border-l md:border-t-0">
-                <LazyImage className="h-44 w-full rounded-lg object-cover" src={current.image} alt={current.meaning} />
+                <LazyImage
+                  className="h-44 w-full rounded-lg object-cover"
+                  src={current.image}
+                  alt={current.meaning}
+                />
                 <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
                   <Info label="Bộ thủ" value={current.radical || "-"} />
                   <Info label="Số nét" value={current.strokes || "-"} />
@@ -101,7 +138,10 @@ export function LearnPage({ topics, words, learning }) {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {current.relatedWords?.map((item) => (
-                    <span key={item} className="rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-gray-700">
+                    <span
+                      key={item}
+                      className="rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-gray-700"
+                    >
                       {item}
                     </span>
                   ))}
@@ -113,45 +153,90 @@ export function LearnPage({ topics, words, learning }) {
           <aside className="space-y-3">
             <div className="panel p-4">
               <div className="grid grid-cols-3 gap-2">
-                <button className="icon-button w-full" type="button" onClick={() => move(-1)} title="Previous">
+                <button
+                  className="icon-button w-full"
+                  type="button"
+                  onClick={() => move(-1)}
+                  title="Previous"
+                >
                   <SkipBack size={18} />
                 </button>
-                <button className="icon-button w-full" type="button" onClick={() => speakChinese(current.chinese)} title="Phát âm">
+                <button
+                  className="icon-button w-full"
+                  type="button"
+                  onClick={() => speakChinese(current.chinese)}
+                  title="Phát âm"
+                >
                   <Volume2 size={18} />
                 </button>
-                <button className="icon-button w-full" type="button" onClick={() => move(1)} title="Next">
+                <button
+                  className="icon-button w-full"
+                  type="button"
+                  onClick={() => move(1)}
+                  title="Next"
+                >
                   <SkipForward size={18} />
                 </button>
               </div>
               <div className="mt-3 grid grid-cols-2 gap-2">
-                <button className="ghost-button px-3" type="button" onClick={() => setShowPinyin((value) => !value)}>
+                <button
+                  className="ghost-button px-3"
+                  type="button"
+                  onClick={() => setShowPinyin((value) => !value)}
+                >
                   {showPinyin ? <EyeOff size={17} /> : <Eye size={17} />}
                   Pinyin
                 </button>
-                <button className="ghost-button px-3" type="button" onClick={() => setShowMeaning((value) => !value)}>
+                <button
+                  className="ghost-button px-3"
+                  type="button"
+                  onClick={() => setShowMeaning((value) => !value)}
+                >
                   {showMeaning ? <EyeOff size={17} /> : <Eye size={17} />}
                   Nghĩa
                 </button>
               </div>
-              <button className="mt-3 ghost-button w-full" type="button" onClick={shuffle}>
+              <button
+                className="mt-3 ghost-button w-full"
+                type="button"
+                onClick={shuffle}
+              >
                 <Shuffle size={17} />
                 Random
               </button>
             </div>
 
             <div className="panel p-4">
-              <button className="solid-button w-full" type="button" onClick={() => learning.markLearned(current.id)}>
+              <button
+                className="solid-button w-full"
+                type="button"
+                onClick={() => learning.markLearned(current.id)}
+              >
                 <Check size={17} />
-                {learning.learnedIds.includes(current.id) ? "Đã học" : "Đánh dấu đã học"}
+                {learning.learnedIds.includes(current.id)
+                  ? "Đã học"
+                  : "Đánh dấu đã học"}
               </button>
-              <button className="mt-3 ghost-button w-full" type="button" onClick={() => learning.toggleFavorite(current.id)}>
-                <Heart size={17} fill={learning.favoriteIds.includes(current.id) ? "currentColor" : "none"} />
+              <button
+                className="mt-3 ghost-button w-full"
+                type="button"
+                onClick={() => learning.toggleFavorite(current.id)}
+              >
+                <Heart
+                  size={17}
+                  fill={
+                    learning.favoriteIds.includes(current.id)
+                      ? "currentColor"
+                      : "none"
+                  }
+                />
                 Favorite
               </button>
             </div>
           </aside>
         </section>
       )}
+      {/* Recorder removed */}
     </div>
   );
 }
@@ -164,4 +249,3 @@ function Info({ label, value }) {
     </div>
   );
 }
-

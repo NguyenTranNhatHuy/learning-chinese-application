@@ -135,7 +135,12 @@ export default function App() {
         <Route
           path="/quiz"
           element={
-            <QuizPage quizzes={quizzes} words={words} learning={learning} />
+            <QuizPage
+              quizzes={quizzes}
+              words={words}
+              topics={topics}
+              learning={learning}
+            />
           }
         />
         <Route

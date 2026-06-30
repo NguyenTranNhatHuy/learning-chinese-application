@@ -12,10 +12,30 @@ export function HomePage({ topics, words, learning, user }) {
   return (
     <div className="space-y-6">
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={BookOpen} label="Từ đã học" value={learning.metrics.learnedCount} tone="red" />
-        <StatCard icon={Trophy} label="Tiến độ" value={`${learning.metrics.progress}%`} tone="green" />
-        <StatCard icon={Heart} label="Yêu thích" value={learning.metrics.favoriteCount} tone="blue" />
-        <StatCard icon={Flame} label="Streak" value={`${user?.streak || 0} ngày`} tone="amber" />
+        <StatCard
+          icon={BookOpen}
+          label="Từ đã học"
+          value={learning.metrics.learnedCount}
+          tone="red"
+        />
+        <StatCard
+          icon={Trophy}
+          label="Tiến độ"
+          value={`${learning.metrics.progress}%`}
+          tone="green"
+        />
+        <StatCard
+          icon={Heart}
+          label="Yêu thích"
+          value={learning.metrics.favoriteCount}
+          tone="blue"
+        />
+        <StatCard
+          icon={Flame}
+          label="Streak"
+          value={`${user?.streak || 0} ngày`}
+          tone="amber"
+        />
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_380px]">
@@ -23,14 +43,22 @@ export function HomePage({ topics, words, learning, user }) {
           <div className="grid min-h-[320px] gap-0 md:grid-cols-[1fr_260px]">
             <div className="p-5 md:p-7">
               <div className="flex flex-wrap gap-2 text-xs font-semibold">
-                <span className="rounded-lg bg-red-50 px-3 py-1.5 text-primary">HSK mỗi ngày</span>
-                <span className="rounded-lg bg-emerald-50 px-3 py-1.5 text-emerald-700">Spaced repetition</span>
+                <span className="rounded-lg bg-red-50 px-3 py-1.5 text-primary">
+                  HSK mỗi ngày
+                </span>
+                <span className="rounded-lg bg-emerald-50 px-3 py-1.5 text-emerald-700">
+                  Spaced repetition
+                </span>
               </div>
               <h2 className="mt-5 max-w-2xl text-3xl font-black leading-tight text-gray-950 md:text-5xl">
                 {todayWord?.chinese}
               </h2>
-              <p className="mt-3 text-lg font-semibold text-primary">{todayWord?.pinyin}</p>
-              <p className="mt-2 max-w-xl text-base text-gray-600">{todayWord?.meaning}</p>
+              <p className="mt-3 text-lg font-semibold text-primary">
+                {todayWord?.pinyin}
+              </p>
+              <p className="mt-2 max-w-xl text-base text-gray-600">
+                {todayWord?.meaning}
+              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link className="solid-button" to="/learn">
                   <BookOpen size={18} />
@@ -42,7 +70,11 @@ export function HomePage({ topics, words, learning, user }) {
                 </Link>
               </div>
             </div>
-            <LazyImage className="h-64 w-full object-cover md:h-full" src={todayWord?.image} alt={todayWord?.meaning} />
+            <LazyImage
+              className="h-64 w-full object-cover md:h-full"
+              src={todayWord?.image}
+              alt={todayWord?.meaning}
+            />
           </div>
         </div>
 
@@ -50,15 +82,44 @@ export function HomePage({ topics, words, learning, user }) {
           <h2 className="text-lg font-bold text-gray-950">Từ học nhiều</h2>
           <div className="mt-4 space-y-3">
             {words.slice(1, 5).map((word) => (
-              <div key={word.id} className="flex items-center gap-3 rounded-lg border border-gray-100 p-3">
-                <span className="hanzi flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 text-2xl font-bold text-gray-950">
-                  {word.chinese}
-                </span>
+              <div
+                key={word.id}
+                className="flex items-center gap-3 rounded-xl border border-gray-100 bg-white p-3 shadow-sm hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="relative">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-pink-50 text-2xl font-black text-gray-900">
+                    {word.chinese}
+                  </span>
+                  <span className="absolute -top-2 -right-2 rounded-full bg-white p-1 text-sm shadow">
+                    🌸
+                  </span>
+                </div>
+
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-semibold text-gray-950">{word.meaning}</p>
+                  <p className="truncate font-semibold text-gray-900">
+                    {word.meaning}
+                  </p>
                   <p className="text-sm text-gray-500">{word.pinyin}</p>
                 </div>
-                <span className="rounded-lg bg-red-50 px-2.5 py-1 text-xs font-bold text-primary">HSK {word.hskLevel}</span>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => learning.toggleFavorite(word.id)}
+                    title={
+                      learning.favoriteIds.includes(word.id)
+                        ? "Bỏ yêu thích"
+                        : "Yêu thích"
+                    }
+                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full border ${learning.favoriteIds.includes(word.id) ? "border-pink-200 bg-pink-50 text-pink-600" : "border-gray-100 text-gray-500"}`}
+                  >
+                    {learning.favoriteIds.includes(word.id) ? "💖" : "🤍"}
+                  </button>
+
+                  <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600">
+                    HSK {word.hskLevel}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -83,7 +144,9 @@ export function HomePage({ topics, words, learning, user }) {
         <section>
           <div className="mb-3 flex items-center justify-between gap-3">
             <h2 className="text-xl font-bold text-gray-950">Từ mới hôm nay</h2>
-            <span className="text-sm font-semibold text-gray-500">{todayTopic?.title}</span>
+            <span className="text-sm font-semibold text-gray-500">
+              {todayTopic?.title}
+            </span>
           </div>
           <WordTile
             word={todayWord}
@@ -98,4 +161,3 @@ export function HomePage({ topics, words, learning, user }) {
     </div>
   );
 }
-
