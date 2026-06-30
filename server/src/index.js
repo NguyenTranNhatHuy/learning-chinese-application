@@ -41,14 +41,23 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/auth", authRouter);
 app.use("/api/topics", topicRouter);
+app.use("/topics", topicRouter);
 app.use("/api/vocabularies", vocabularyRouter);
+app.use("/vocabularies", vocabularyRouter);
 app.use("/api/quiz", quizRouter);
+app.use("/quiz", quizRouter);
 app.use("/api/favorites", favoriteRouter);
+app.use("/favorites", favoriteRouter);
 app.use("/api/progress", progressRouter);
+app.use("/progress", progressRouter);
 app.use("/api/admin", adminRouter);
+app.use("/admin", adminRouter);
 app.use("/api/uploads", uploadRouter);
+app.use("/uploads", uploadRouter);
 app.use("/api/ai", aiRouter);
+app.use("/ai", aiRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: `Không tìm thấy route ${req.originalUrl}` });
