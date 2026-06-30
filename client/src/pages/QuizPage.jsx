@@ -74,6 +74,11 @@ export function QuizPage({ quizzes, words, topics, learning }) {
     (item) => item.id === currentQuiz?.vocabularyId,
   );
 
+  const currentOptions = useMemo(() => {
+    if (!currentQuiz) return [];
+    return shuffleArray(currentQuiz.options);
+  }, [currentQuiz?.id, currentQuiz?.options]);
+
   function formatTime(value) {
     const hours = Math.floor(value / 3600);
     const minutes = Math.floor((value % 3600) / 60);
@@ -172,8 +177,6 @@ export function QuizPage({ quizzes, words, topics, learning }) {
 
     if (currentIndex < activeQuizzes.length - 1) {
       setCurrentIndex((value) => value + 1);
-    } else {
-      finishQuiz();
     }
   }
 
@@ -388,7 +391,7 @@ export function QuizPage({ quizzes, words, topics, learning }) {
               </div>
 
               <div className="mt-8 grid gap-3 md:grid-cols-2">
-                {currentQuiz.options.map((option) => {
+                {currentOptions.map((option) => {
                   const selection = selectedAnswers[currentIndex];
                   const isSelected = selection?.answer === option;
 
