@@ -20,6 +20,7 @@ import { QuizPage } from "./pages/QuizPage.jsx";
 import { ReviewPage } from "./pages/ReviewPage.jsx";
 import { SearchPage } from "./pages/SearchPage.jsx";
 import { TopicDetailPage, TopicsPage } from "./pages/TopicsPage.jsx";
+import { WritePage } from "./pages/WritePage.jsx";
 import { useAuth } from "./state/AuthContext.jsx";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 
@@ -151,6 +152,7 @@ export default function App() {
               <ReviewPage topics={topics} words={words} learning={learning} />
             }
           />
+          <Route path="/write" element={<WritePage words={words} />} />
           <Route
             path="/dashboard"
             element={
